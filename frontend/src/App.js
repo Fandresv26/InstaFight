@@ -1,89 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import './App.css';
-import InfoColumn from './infoColumn';
+import React, { Component } from "react";
+import Main from "./components/main.jsx";
+import "./styles/App.css";
 
 class App extends Component {
+    constructor(props) {
+        super(props);
 
+        this.state = {          
+            token: null,
+            activeUser: "none"
+        };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      infoColumn: []
+        this.url = "";
     }
-  }
 
-  componentDidMount() {
-    fetch("https://www.instagram.com/"+this.state.term+"/?__a=1")
-      .then((res)=>{
-        if (res.status!=="200") {
-          console.log("Error getting the data");
-        }
-        return res.json();
-      })
-      .then((json)=>{
+    saveToken(newToken) {
+        this.setState({ token: newToken });
+    }
+
+    deleteToken() {
         this.setState({
-          usuario1:json
-        })
-      })
-  }
+            token: null
+        });
+    }
 
-  getInfoColumn(){
-
-    console.log(this.state.users);
-    this.setState({infoColumn:[]},()=>{
-      this.state.users.map((user, i)=>{
-        if(user){
-          console.log("USER: "+user);
-          /*se crea una variable adicional, en este caso axios, que llama fotos de flickr.*/
-          .then(response => {
-            console.log(response);
-
-            var info = response.data.infoColumn;
-
-
-            this.state.infoColumn[i]=info;
-            this.setState({
-              info: this.state.info
-            });
-          });
-        }
-      });
-    });
-  }
-
-  change(val){
-      console.log(val);
-      this.setState({
-        term:val
-      });
-  }
-
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to InstaFights</h1>
-        </header>
-        <p className="App-intro">
-          Digite el nombre de los usuarios a comparar.
-        </p>
-
-        <input className="form-control1" type="text" onChange={(event) => this.change(event.target.value)}/>
-
-        <input className="form-control2" type="text" onChange={(event) => this.change(event.target.value)}/>
-
-        <InfoColumn info={this.state.infoColumn}></InfoColumn>
-
-        
-      </div>
-    );
-  }
-
-
+    render() {
+        return (
+            <div>
+                <div className="main">
+                    <Main token={this.state.token} saveToken={this.saveToken.bind(this)} deleteToken={this.deleteToken.bind(this)} url={this.url} />
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
