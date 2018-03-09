@@ -11,11 +11,15 @@ class Fight extends  Component{
         this.state={
             user1: "",
             user2: "",
-            photos:[]
+            likes1: null,
+            likes2: null
         };
     }
 
     getUser1(u1){
+        this.setState({
+            user1: u1
+        });
         fetch("https://www.instagram.com/"+u1+"/?__a=1")
             .then((res)=>{
                 if (res.status!=="200") {
@@ -23,17 +27,21 @@ class Fight extends  Component{
                 }
             return res.json();
             })
-            .then(userOne=>{
-                userOne.user.media.nodes.map(img =>
-                    this.state.likes += img.likes.count),
+            .then((userOne) =>{
+                userOne.user.media.nodes.map(img => 
+                    likes += img.likes.count),
+
                 this.setState({
-                    user1:userOne,
-                    likes1:this.state.likes
+                    user1: userOne;
+                    likes: likes1;
                 })
             })
     }
 
-    getUser2(u2){
+    getUser2(u1){
+        this.setState({
+            user2: u2
+        });
         fetch("https://www.instagram.com/"+u2+"/?__a=1")
             .then((res)=>{
                 if (res.status!=="200") {
@@ -41,19 +49,15 @@ class Fight extends  Component{
                 }
             return res.json();
             })
-            .then(userTwo=>{
-                userTwo.user.media.nodes.map(img =>
-                    this.state.likes += img.likes.count),
+            .then((userTwo) =>{
+                userOne.user.media.nodes.map(img => 
+                    likes += img.likes.count),
+
                 this.setState({
-                    user2:userTwo,
-                    likes2:this.state.likes
+                    user2: userTwo;
+                    likes: likes2;
                 })
             })
-    }
-
-    getUsers(u1, u2){
-        console.log(this.state.user1);
-        console.log(this.state.user2);
     }
 
     
@@ -65,7 +69,11 @@ class Fight extends  Component{
                     <h1>Fight</h1>
                 </header>
 
-                <Search getUsers={this.getUser1.bind(this), this.getUser2.bind(this)}></Search>
+                <Search search={this.search.bind(this)}></Search>
+
+                //*<div className="row">
+                     <Users users={this.state.users} />
+                </div>*/
 
                 
 

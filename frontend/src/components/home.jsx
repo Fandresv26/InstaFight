@@ -35,7 +35,7 @@ class Home extends Component {
                 <br />
                
 
-					 <a href="#fight" className="button">Figths!</a>
+					 <a href="#fight" className="button">Fights!</a>
 					 <a href="#history" className="button">History</a>
 
 				<br />

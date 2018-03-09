@@ -8,16 +8,21 @@ class Users extends Component {
     }
 
 
+    renderUsers(){
+        return this.props.users.map((t,i) =>{
+            return <User user ={t} key={i}/>
+        });
+    }
+
+
     render(){
         return(
             <div>
-                <User user={this.state.user} />
+                {this.renderFollowers()}
             </div>);
     }
 }
 
-Users.PropTypes = {
-    users : PropTypes.array.isRequired
 };
 
 export default Users;
